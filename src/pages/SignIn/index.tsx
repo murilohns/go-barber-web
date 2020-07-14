@@ -18,6 +18,7 @@ import { useAuth } from '../../hooks/AuthContext';
 interface SignInFormData {
   email: string;
   password: string;
+  u_e: string;
 }
 
 const SignIn: React.FC = () => {
