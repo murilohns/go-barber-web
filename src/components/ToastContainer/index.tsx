@@ -1,56 +1,36 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FiAlertCircle, FiXCircle } from 'react-icons/fi';
+import { ToastMessage, useToast } from '../../hooks/toast';
 
 import { Container, Toast } from './styles';
 
-const ToastContainer: React.FC = () => (
-  <Container>
-    <Toast hasDescription>
-      <FiAlertCircle size={20} />
+interface ToastContainerProps {
+  messages: ToastMessage[];
+}
 
-      <div>
-        <strong>
-          Aconteceu um erro.
-        </strong>
-        <p>
-          Não foi possível fazer login na aplicação.
-        </p>
-      </div>
+const ToastContainer: React.FC<ToastContainerProps> = ({ messages }) => {
+  const { removeToast } = useToast();
 
-      <button type="button">
-        <FiXCircle size={18} />
-      </button>
-    </Toast>
-    <Toast type="success" hasDescription={false}>
-      <FiAlertCircle size={20} />
+  return (
+    <Container>
+      {messages.map((message) => (
+        <Toast hasDescription={!!message.description} key={message.id} type={message.type}>
+          <FiAlertCircle size={20} />
 
-      <div>
-        <strong>
-          Aconteceu um erro.
-        </strong>
-      </div>
+          <div>
+            <strong>
+              {message.title}
+            </strong>
+            {message.description && <p>{message.description}</p>}
+          </div>
 
-      <button type="button">
-        <FiXCircle size={18} />
-      </button>
-    </Toast>
-    <Toast type="error" hasDescription>
-      <FiAlertCircle size={20} />
-
-      <div>
-        <strong>
-          Aconteceu um erro.
-        </strong>
-        <p>
-          Não foi possível fazer login na aplicação.
-        </p>
-      </div>
-
-      <button type="button">
-        <FiXCircle size={18} />
-      </button>
-    </Toast>
-  </Container>
-);
+          <button onClick={() => removeToast(message.id)} type="button">
+            <FiXCircle size={18} />
+          </button>
+        </Toast>
+      ))}
+    </Container>
+  );
+};
 
 export default ToastContainer;
