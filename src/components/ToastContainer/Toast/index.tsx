@@ -31,7 +31,7 @@ const Toast:React.FC<ToastProps> = ({ message, style }) => {
   }, [removeToast, message.id]);
 
   return (
-    <Container type={message.type} hasDescription={!!message.description} style={style}>
+    <Container type={message.type} $hasdescription={!!message.description} style={style}>
       <FiAlertCircle size={20} />
 
       <div>
